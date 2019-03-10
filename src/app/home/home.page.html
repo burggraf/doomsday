@@ -18,7 +18,11 @@
   <ion-item lines="full">
       <ion-label text-center><h1>{{ TestDisplay }}</h1></ion-label>
   </ion-item>
-  <ion-item *ngFor="let day of days; let i = index;" [color]="buttonColors[i]" lines="full" (click)="buttonPress(i)">
+  <ion-item *ngFor="let day of days; let i = index;" 
+            [color]="buttonColors[i]" 
+            lines="full"
+            [disabled]="!testing"
+            (click)="buttonPress(i)">
     <ion-label text-center><h1>{{ day }}</h1></ion-label>
   </ion-item>
 </ion-content>
