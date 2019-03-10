@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { start } from 'repl';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +16,7 @@ export class HomePage implements OnInit {
   startTime = 0;
   endTime = 0;
   elapsed = moment.unix(0).utc().format('mm:ss.S');
+  stats: any;
   buttonColors = [
     'light',
     'light',
@@ -35,9 +36,14 @@ export class HomePage implements OnInit {
     'Saturday',
   ];
 
-  constructor() { }
+  constructor(private storage: Storage) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.stats = this.storage.get('stats');
+    if (this.stats === null) {
+      this.stats = {};
+    }
+  }
 
   updateTimerDisplay() {
     const doUpdate = () => {
