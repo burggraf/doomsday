@@ -1,0 +1,6 @@
+{
+  "appId": "com.dmarie.doomsday",
+  "appName": "doomsday",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}
