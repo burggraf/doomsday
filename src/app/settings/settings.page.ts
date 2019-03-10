@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-settings',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
+  stats = {};
+  moment = moment;
+  constructor(private storage: Storage) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  async ngOnInit() {
+    this.stats = await this.storage.get('stats');
+    if (this.stats === null) {
+      this.stats = {};
+    }
   }
 
 }

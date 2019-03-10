@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
   endTime = 0;
   elapsed = moment.unix(0).utc().format('mm:ss.S');
   stats: any;
+  tries = 0;
   buttonColors = [
     'light',
     'light',
@@ -38,8 +39,8 @@ export class HomePage implements OnInit {
 
   constructor(private storage: Storage) { }
 
-  ngOnInit() {
-    this.stats = this.storage.get('stats');
+  async ngOnInit() {
+    this.stats = await this.storage.get('stats');
     if (this.stats === null) {
       this.stats = {};
     }
@@ -50,7 +51,6 @@ export class HomePage implements OnInit {
       this.endTime = +new Date();
       const diff = ((this.endTime - this.startTime) / 1000);
       this.elapsed = moment.unix(diff).utc().format('mm:ss.S');
-      console.log('this.testing = ' + this.testing);
       if (this.testing) {
         setTimeout(function () {
           doUpdate();
@@ -65,6 +65,7 @@ export class HomePage implements OnInit {
     for (let i = 0; i < 7; i++) {
       this.buttonColors[i] = 'light';
     }
+    this.tries = 0;
     this.startDate = moment('1800-01-01');
     const span = this.endDate.diff(this.startDate, 'days');
     const rnd = Math.floor(Math.random() * span); // returns a random integer from 0 to 9
@@ -75,13 +76,36 @@ export class HomePage implements OnInit {
   }
 
   buttonPress(i: number) {
+    this.tries++;
     if (this.startDate.day() === i) {
       this.buttonColors[i] = 'success';
       this.testing = false;
       this.updateTimerDisplay();
+      this.saveScore();
     } else {
       this.buttonColors[i] = 'danger';
     }
+  }
+
+  saveScore() {
+    if (!this.stats || this.stats === null) { this.stats = {}; }
+    if (!this.stats.tests) { this.stats.tests = []; }
+    if (!this.stats.streak) { this.stats.streak = 0; }
+    if (!this.stats.recordStreak) { this.stats.recordStreak = 0; }
+    this.stats.tests.push({
+      'date': this.startDate,
+      'tries': this.tries,
+      'time': ((this.endTime - this.startTime) / 1000)
+    });
+    if (this.tries === 1) {
+      this.stats.streak++;
+      if (this.stats.streak > this.stats.recordStreak) {
+        this.stats.recordStreak = this.stats.streak;
+      }
+    } else {
+      this.stats.streak = 0;
+    }
+    this.storage.set('stats', this.stats);
   }
 
 }
