@@ -13,7 +13,9 @@
 </ion-header>
 
 <ion-content padding>
-  <br>
+  <ion-item lines="none">
+      <ion-label text-center><h1>{{ elapsed }}</h1></ion-label>
+  </ion-item>  
   <ion-button (click)="test()" color="primary" expand="block" [disabled]="testing">Test Me</ion-button>
   <ion-item lines="full">
       <ion-label text-center><h1>{{ TestDisplay }}</h1></ion-label>
