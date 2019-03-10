@@ -2,6 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 
+interface Test {
+  ts: number;
+  date: string;
+  tries: number;
+  time: number;
+}
+interface Stats {
+  streak: number;
+  recordStreak: number;
+  tests: Array<Test>;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -16,7 +28,7 @@ export class HomePage implements OnInit {
   startTime = 0;
   endTime = 0;
   elapsed = moment.unix(0).utc().format('mm:ss.S');
-  stats: any;
+  stats: Stats;
   tries = 0;
   buttonColors = [
     'light',
@@ -42,7 +54,11 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     this.stats = await this.storage.get('stats');
     if (this.stats === null) {
-      this.stats = {};
+      this.stats = {
+        streak: 0,
+        recordStreak: 0,
+        tests: []
+      };
     }
   }
 
@@ -70,7 +86,7 @@ export class HomePage implements OnInit {
     const span = this.endDate.diff(this.startDate, 'days');
     const rnd = Math.floor(Math.random() * span); // returns a random integer from 0 to 9
     this.startDate.add(rnd, 'days');
-    this.TestDisplay = this.startDate.calendar();
+    this.TestDisplay = this.startDate.format('MM/DD/YYYY');
     this.startTime = +new Date();
     this.updateTimerDisplay();
   }
@@ -88,12 +104,15 @@ export class HomePage implements OnInit {
   }
 
   saveScore() {
+    /*
     if (!this.stats || this.stats === null) { this.stats = {}; }
     if (!this.stats.tests) { this.stats.tests = []; }
     if (!this.stats.streak) { this.stats.streak = 0; }
     if (!this.stats.recordStreak) { this.stats.recordStreak = 0; }
-    this.stats.tests.push({
-      'date': this.startDate,
+    */
+    this.stats.tests.unshift({
+      'ts': +new Date(),
+      'date': this.startDate.format('MM/DD/YYYY'),
       'tries': this.tries,
       'time': ((this.endTime - this.startTime) / 1000)
     });
