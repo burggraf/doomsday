@@ -1,18 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
-
-interface Test {
-  ts: number;
-  date: string;
-  tries: number;
-  time: number;
-}
-interface Stats {
-  streak: number;
-  recordStreak: number;
-  tests: Array<Test>;
-}
+import { Stats } from '../interfaces/stats';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +17,11 @@ export class HomePage implements OnInit {
   startTime = 0;
   endTime = 0;
   elapsed = moment.unix(0).utc().format('mm:ss.S');
-  stats: Stats;
+  stats: Stats = {
+    streak: 0,
+    recordStreak: 0,
+    tests: []
+  };
   tries = 0;
   buttonColors = [
     'light',
@@ -52,14 +45,6 @@ export class HomePage implements OnInit {
   constructor(private storage: Storage) { }
 
   async ngOnInit() {
-    this.stats = await this.storage.get('stats');
-    if (this.stats === null) {
-      this.stats = {
-        streak: 0,
-        recordStreak: 0,
-        tests: []
-      };
-    }
   }
 
   updateTimerDisplay() {
@@ -104,12 +89,6 @@ export class HomePage implements OnInit {
   }
 
   saveScore() {
-    /*
-    if (!this.stats || this.stats === null) { this.stats = {}; }
-    if (!this.stats.tests) { this.stats.tests = []; }
-    if (!this.stats.streak) { this.stats.streak = 0; }
-    if (!this.stats.recordStreak) { this.stats.recordStreak = 0; }
-    */
     this.stats.tests.unshift({
       'ts': +new Date(),
       'date': this.startDate.format('MM/DD/YYYY'),
@@ -125,6 +104,17 @@ export class HomePage implements OnInit {
       this.stats.streak = 0;
     }
     this.storage.set('stats', this.stats);
+  }
+  async ionViewWillEnter() {
+    console.log('home ionViewWillEnter');
+    this.stats = await this.storage.get('stats');
+    if (this.stats === null) {
+      this.stats = {
+        streak: 0,
+        recordStreak: 0,
+        tests: []
+      };
+    }
   }
 
 }

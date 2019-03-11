@@ -1,29 +1,65 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/home"></ion-back-button>
-          </ion-buttons>
-        <ion-title>Settings</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item lines="full">
+  <ion-list>
+    <ion-item lines="full">
+      <ion-range #slider
+                  (ionChange)="rangeChange($event)" 
+                  dualKnobs="true" 
+                  min="1700" 
+                  max="2200" 
+                  step="100" 
+                  debounce="500" 
+                  snaps="true" 
+                  pin="true"></ion-range>
+    </ion-item>
+    <ion-item lines="full" (click)="clearStats()" color="light">
       <ion-grid>
-          <ion-row style="padding-left: 15px; padding-right: 5px;">
-            <ion-col size="5">Date</ion-col>
-            <ion-col size="2" text-center>Tries</ion-col>
-            <ion-col size="5" text-right>Time</ion-col>
-          </ion-row>
-        </ion-grid>  
-  </ion-item>
-    <ion-item *ngFor="let test of stats.tests" lines="full">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="5">{{ moment(test.date).format('MM/DD/YYYY') }}</ion-col>
-      <ion-col size="2" text-center>{{test.tries}}</ion-col>
-      <ion-col size="5" text-right>{{moment.unix(test.time).utc().format('ss.S')}}</ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-item>
+        <ion-row>
+          <ion-col>
+              <ion-label>Clear stats (streaks, log)</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item lines="full" (click)="showLog = !showLog" color="light">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="10">
+            <ion-label>{{ (showLog?'Hide':'Show') }} Log</ion-label>
+          </ion-col>
+          <ion-col size="2" text-right>
+            <ion-icon [name]="(showLog?'remove':'add')" size="medium"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item-group *ngIf="showLog">
+        <ion-item lines="full">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="5">Date</ion-col>
+                <ion-col size="2" text-center>Tries</ion-col>
+                <ion-col size="5" text-right>Time</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item *ngFor="let test of stats.tests" lines="full">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="5">{{ moment(test.date).format('MM/DD/YYYY') }}</ion-col>
+                <ion-col size="2" text-center>{{test.tries}}</ion-col>
+                <ion-col size="5" text-right>{{moment.unix(test.time).utc().format('ss.S')}}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>      
+    </ion-item-group>
+  </ion-list>
 </ion-content>
