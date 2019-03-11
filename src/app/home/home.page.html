@@ -9,16 +9,18 @@
         <ion-title>
       Doomsday
     </ion-title>
+    <ion-text slot="end">{{ elapsed | number:'2.1-1'}}</ion-text>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-item lines="none">
-      <ion-label text-center><h1>{{ elapsed }}</h1></ion-label>
-  </ion-item>  
-  <ion-button (click)="test()" color="primary" expand="block" [disabled]="testing">Test Me</ion-button>
+    <ion-label>
+      <ion-button size="large" (click)="test()" color="primary" expand="block" [disabled]="testing">Test Me</ion-button>
+    </ion-label>
+  </ion-item>
   <ion-item lines="full">
-      <ion-label text-center><h1>{{ TestDisplay }}</h1></ion-label>
+      <ion-label text-center><h1>{{ TestDisplay | date }}</h1></ion-label>
   </ion-item>
   <ion-item *ngFor="let day of days; let i = index;" 
             [color]="buttonColors[i]" 

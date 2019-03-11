@@ -1,7 +1,7 @@
 import { Component, OnInit, ContentChild, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
-import { IonRange } from '@ionic/angular';
+import { IonRange, IonContent } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Stats } from '../interfaces/stats';
 
@@ -12,13 +12,13 @@ import { Stats } from '../interfaces/stats';
 })
 export class SettingsPage implements OnInit, AfterViewInit {
   @ViewChild(IonRange, { read: IonRange }) slider: IonRange;
-
+  @ViewChild(IonContent) content: IonContent;
   stats: Stats = {
     streak: 0,
     recordStreak: 0,
     tests: []
   };
-  moment = moment;
+  // moment = moment;
   showLog = false;
   constructor(private storage: Storage,
     private alertController: AlertController) {
@@ -29,10 +29,7 @@ export class SettingsPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log('this.slider', this.slider);
-    setTimeout(() => {
-      console.log('this.slider', this.slider);
-    }, 1000);
+
   }
   async ionViewWillEnter() {
     console.log('settings ionViewWillEnter');

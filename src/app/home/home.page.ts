@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
   testing = false;
   startTime = 0;
   endTime = 0;
-  elapsed = moment.unix(0).utc().format('mm:ss.S');
+  elapsed = 0; // moment.unix(0).utc().format('ss.S');
   stats: Stats = {
     streak: 0,
     recordStreak: 0,
@@ -50,8 +50,9 @@ export class HomePage implements OnInit {
   updateTimerDisplay() {
     const doUpdate = () => {
       this.endTime = +new Date();
-      const diff = ((this.endTime - this.startTime) / 1000);
-      this.elapsed = moment.unix(diff).utc().format('mm:ss.S');
+      this.elapsed = Math.min(((this.endTime - this.startTime) / 1000), 99.9);
+      // console.log(diff);
+      // this.elapsed = diff; // moment.unix(diff).utc().format('ss.S');
       if (this.testing) {
         setTimeout(function () {
           doUpdate();
@@ -90,10 +91,10 @@ export class HomePage implements OnInit {
 
   saveScore() {
     this.stats.tests.unshift({
-      'ts': +new Date(),
+      'ts': moment(), // +new Date(),
       'date': this.startDate.format('MM/DD/YYYY'),
       'tries': this.tries,
-      'time': ((this.endTime - this.startTime) / 1000)
+      'time': Math.min(((this.endTime - this.startTime) / 1000), 99.9)
     });
     if (this.tries === 1) {
       this.stats.streak++;
