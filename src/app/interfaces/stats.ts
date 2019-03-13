@@ -1,5 +1,7 @@
+import { Moment } from 'moment';
+
 interface Test {
-    ts: number;
+    ts: Moment;
     date: string;
     tries: number;
     time: number;

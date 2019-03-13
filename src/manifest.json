@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "Doomsday Tester",
+  "short_name": "Doomsday Tester",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

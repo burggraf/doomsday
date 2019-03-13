@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 import { Stats } from '../interfaces/stats';
+import { ShowworkService } from '../services/showwork.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-home',
@@ -23,6 +26,7 @@ export class HomePage implements OnInit {
     tests: []
   };
   tries = 0;
+  steps = [];
   buttonColors = [
     'light',
     'light',
@@ -33,16 +37,28 @@ export class HomePage implements OnInit {
     'light'
   ];
   days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
   ];
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage,
+              private showWorkService: ShowworkService,
+              private sanitizer: DomSanitizer) {
+    console.log(this.showWorkService.showWork(moment('1879-12-27')));
+    /*
+    console.log(this.showWorkService.showWork(moment('1850-02-03')));
+    console.log(this.showWorkService.showWork(moment('1967-04-16')));
+    console.log(this.showWorkService.showWork(moment('1995-12-31')));
+    console.log(this.showWorkService.showWork(moment('1995-12-01')));
+    console.log(this.showWorkService.showWork(moment('2019-03-11')));
+    console.log(this.showWorkService.showWork(moment('2100-12-22')));
+    */
+   }
 
   async ngOnInit() {
   }
@@ -64,6 +80,7 @@ export class HomePage implements OnInit {
 
   test() {
     this.testing = true;
+    this.steps = [];
     for (let i = 0; i < 7; i++) {
       this.buttonColors[i] = 'light';
     }
@@ -104,7 +121,12 @@ export class HomePage implements OnInit {
     } else {
       this.stats.streak = 0;
     }
-    this.storage.set('stats', this.stats);
+    const arr = this.showWorkService.showWork(this.startDate);
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = this.sanitizer.bypassSecurityTrustHtml(arr[i]);
+    }
+    this.steps = arr;
+  this.storage.set('stats', this.stats);
   }
   async ionViewWillEnter() {
     console.log('home ionViewWillEnter');
