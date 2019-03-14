@@ -64,7 +64,7 @@ export class ShowworkService {
       o.push(yIndex + ' + 11 = <b>' + (yIndex + 11).toString() + '</b>');
       yIndex += 11;
     }
-    const next7 = (7 - (yIndex % 7)) + yIndex;
+    let next7 = (7 - (yIndex % 7)) + yIndex;
     if (next7 - yIndex === 7) {
       next7 -= 7;
     }
