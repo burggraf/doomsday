@@ -41,7 +41,10 @@
               <ion-item lines="none">
                 <ion-label text-center>Best: {{stats?.recordStreak}}</ion-label>
               </ion-item>
-                      </ion-list>          
+              <ion-item lines="none">
+                  <ion-label text-center>{{(stats?.wins / stats?.trials * 100).toFixed(1)}}%</ion-label>
+                </ion-item>
+                        </ion-list>          
     </ion-col>
     <ion-col size="8">
         <ion-list>

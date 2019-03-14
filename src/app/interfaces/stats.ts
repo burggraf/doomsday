@@ -10,4 +10,6 @@ export interface Stats {
     streak: number;
     recordStreak: number;
     tests: Array<Test>;
+    trials: number;
+    wins: number;
 }

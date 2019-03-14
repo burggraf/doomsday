@@ -23,7 +23,9 @@ export class HomePage implements OnInit {
   stats: Stats = {
     streak: 0,
     recordStreak: 0,
-    tests: []
+    tests: [],
+    trials: 0,
+    wins: 0
   };
   tries = 0;
   steps = [];
@@ -113,7 +115,15 @@ export class HomePage implements OnInit {
       'tries': this.tries,
       'time': Math.min(((this.endTime - this.startTime) / 1000), 99.9)
     });
+    if (!this.stats.trials) {
+      this.stats.trials = 0;
+    }
+    if (!this.stats.wins) {
+      this.stats.wins = 0;
+    }
+    this.stats.trials++;
     if (this.tries === 1) {
+      this.stats.wins++;
       this.stats.streak++;
       if (this.stats.streak > this.stats.recordStreak) {
         this.stats.recordStreak = this.stats.streak;
@@ -128,6 +138,7 @@ export class HomePage implements OnInit {
     this.steps = arr;
   this.storage.set('stats', this.stats);
   }
+
   async ionViewWillEnter() {
     console.log('home ionViewWillEnter');
     this.stats = await this.storage.get('stats');
@@ -135,7 +146,9 @@ export class HomePage implements OnInit {
       this.stats = {
         streak: 0,
         recordStreak: 0,
-        tests: []
+        tests: [],
+        trials: 0,
+        wins: 0
       };
     }
   }
