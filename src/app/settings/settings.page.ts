@@ -16,7 +16,9 @@ export class SettingsPage implements OnInit, AfterViewInit {
   stats: Stats = {
     streak: 0,
     recordStreak: 0,
-    tests: []
+    tests: [],
+    trials: 0,
+    wins: 0
   };
   // moment = moment;
   showLog = false;
@@ -38,7 +40,9 @@ export class SettingsPage implements OnInit, AfterViewInit {
       this.stats = {
         streak: 0,
         recordStreak: 0,
-        tests: []
+        tests: [],
+        trials: 0,
+        wins: 0
       };
     }
   }
@@ -67,7 +71,9 @@ export class SettingsPage implements OnInit, AfterViewInit {
             this.stats = {
               streak: 0,
               recordStreak: 0,
-              tests: []
+              tests: [],
+              trials: 0,
+              wins: 0
             };
             this.storage.set('stats', this.stats);
           }
