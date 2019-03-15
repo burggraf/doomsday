@@ -9,35 +9,37 @@
 
 <ion-content>
   <ion-list>
-    <ion-item lines="full">
-      <ion-range #slider
-                  (ionChange)="rangeChange($event)" 
-                  dualKnobs="true" 
-                  min="1700" 
-                  max="2200" 
-                  step="100" 
-                  debounce="500" 
-                  snaps="true" 
-                  pin="true"></ion-range>
+    <ion-item lines="none">
+      <ion-label text-center>
+        Test range: {{sliderValue?.lower}} -
+        {{sliderValue?.upper}}
+      </ion-label>
     </ion-item>
+    <ion-item lines="none">
+      <ion-range #slider 
+        (ionChange)="rangeChange($event)" dualKnobs="true" 
+        min="1700" max="2200" step="100" debounce="500"
+        style="padding-top: 0px !important;"
+        snaps="true" [value]="sliderValue" pin="true"></ion-range>
+      </ion-item>
     <ion-item lines="full" (click)="clearStats()" color="light">
-              <ion-label>Clear stats (streaks, log)</ion-label>
+      <ion-label>Clear stats (streaks, log)</ion-label>
     </ion-item>
     <ion-item lines="full" (click)="showLog = !showLog" color="light">
-            <ion-label>{{ (showLog?'Hide':'Show') }} Log</ion-label>
-            <ion-icon slot="end" [name]="(showLog?'remove':'add')" size="medium"></ion-icon>
+      <ion-label>{{ (showLog?'Hide':'Show') }} Log</ion-label>
+      <ion-icon slot="end" [name]="(showLog?'remove':'add')" size="medium"></ion-icon>
     </ion-item>
     <ion-item-group *ngIf="showLog">
-        <ion-item lines="full" color="primary">
-            <ion-label slot="start">Date</ion-label>
-            <ion-label text-center>Tries</ion-label>
-            <ion-label slot="end" text-right>Time</ion-label>
-          </ion-item>
-          <ion-item *ngFor="let test of stats.tests" lines="full">
-            <ion-label slot="start">{{ test.date | date }}</ion-label>
-            <ion-label text-center>{{test.tries}}</ion-label>
-            <ion-label slot="end" text-right>{{ test.time | number:'2.1-1' }}</ion-label>
-          </ion-item>      
+      <ion-item lines="full" color="primary">
+        <ion-label slot="start">Date</ion-label>
+        <ion-label text-center>Tries</ion-label>
+        <ion-label slot="end" text-right>Time</ion-label>
+      </ion-item>
+      <ion-item *ngFor="let test of stats.tests" lines="full">
+        <ion-label slot="start">{{ test.date | date }}</ion-label>
+        <ion-label text-center>{{test.tries}}</ion-label>
+        <ion-label slot="end" text-right>{{ test.time | number:'2.1-1' }}</ion-label>
+      </ion-item>
     </ion-item-group>
   </ion-list>
 </ion-content>

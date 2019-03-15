@@ -25,7 +25,9 @@ export class HomePage implements OnInit {
     recordStreak: 0,
     tests: [],
     trials: 0,
-    wins: 0
+    wins: 0,
+    lower: 1800,
+    upper: 2100
   };
   tries = 0;
   steps = [];
@@ -87,7 +89,10 @@ export class HomePage implements OnInit {
       this.buttonColors[i] = 'light';
     }
     this.tries = 0;
-    this.startDate = moment('1800-01-01');
+    this.startDate = moment(this.stats.lower + '-01-01');
+    this.endDate = moment((this.stats.upper + 99) + '-12-31');
+    console.log('test from ' + this.startDate.format('MM/DD/YYYY') +
+      ' to ' + this.endDate.format('MM/DD/YYYY'));
     const span = this.endDate.diff(this.startDate, 'days');
     const rnd = Math.floor(Math.random() * span); // returns a random integer from 0 to 9
     this.startDate.add(rnd, 'days');
@@ -148,7 +153,9 @@ export class HomePage implements OnInit {
         recordStreak: 0,
         tests: [],
         trials: 0,
-        wins: 0
+        wins: 0,
+        lower: 1800,
+        upper: 2100
       };
     }
   }
