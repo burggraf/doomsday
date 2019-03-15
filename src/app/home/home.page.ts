@@ -158,6 +158,12 @@ export class HomePage implements OnInit {
         upper: 2100
       };
     }
+    if (!this.stats.lower) {
+      this.stats.lower = 1800;
+    }
+    if (!this.stats.upper) {
+      this.stats.upper = 2100;
+    }
   }
 
 }
