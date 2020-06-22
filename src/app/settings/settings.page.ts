@@ -1,7 +1,8 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 // import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
-import { AlertController } from '@ionic/angular';
+
 import { Stats } from '../interfaces/stats';
 
 @Component({
@@ -20,7 +21,7 @@ export class SettingsPage implements OnInit, AfterViewInit {
     trials: 0,
     wins: 0,
     lower: 1800,
-    upper: 2100
+    upper: 2000
   };
   // moment = moment;
   showLog = false;

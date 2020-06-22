@@ -6,7 +6,7 @@ import * as moment from 'moment';
 })
 export class ShowworkService {
   centuryBases = [
-    2, 0, 5, 3
+    -2, 3, 1, -1
   ];
   days = [
     'Sunday',
@@ -18,7 +18,7 @@ export class ShowworkService {
     'Saturday',
   ];
   monthTargets = [
-    3, 7, 7, 4, 9, 6, 11, 8, 5, 10, 7, 12
+    1, 4, 4, 0, 2, 5, 0, 3, 6, 1, 4, 6
   ];
   constructor() { }
   public showWork(date: moment.Moment) {
@@ -41,58 +41,57 @@ export class ShowworkService {
     const monthTarget = this.monthTargets[date.month()];
 
     o.push(date.format('MMMM') + ' Base: ' + monthTarget);
-    mIndex = date.date() - monthTarget;
-    o.push(date.date() + ' - ' + monthTarget + ' = <b>' + mIndex + '</b>');
-    if (mIndex >= 7 || mIndex <= -7) {
-      o.push(mIndex + ' % 7 = <b><span style="color: red;">' + (mIndex % 7) + '</span></b>');
-      mIndex %= 7;
-    }
-    if (mIndex < 0) {
-      o.push('(' + mIndex + ') + 7 = <b>' + (mIndex + 7) + '</b>');
-      mIndex += 7;
-    }
+    const dateMod = (date.date() % 7);
+    o.push(date.date().toString() + ' % 7 = ' + dateMod.toString());
+    let tally = (monthTarget + dateMod) % 7;
+    o.push('(' + monthTarget + ' + ' + dateMod + ' = ' + (monthTarget + dateMod).toString() + ') % 7 = ' + tally.toString());
+
+    const cIndex = centuryBase;
+    console.log('centuryBase', centuryBase)
+    console.log('cIndex', cIndex);
+    o.push(
+      tally.toString() +
+      ((centuryBase > 0) ? '+': '') +
+      centuryBase.toString() + ' (' +
+      century.toString() + '00)' +
+     ' % 7  = ' + ((tally + centuryBase) % 7).toString());
+    tally = (tally + cIndex) % 7;
+
 
     o.push('Year: ' + YY);
-    let yIndex = year;
-    if (isOdd(year)) {
-      yIndex += 11;
-      o.push(YY + ' + 11 = <b>' + yIndex.toString() + '</b>');
+    let yearBase = year % 28;
+    if (year >= 90) {
+      o.push(YY + ' - 90 = ' + (year - 90).toString() + 
+      ' + 6 = ' + yearBase);
+    } else if (year >= 60) {
+      o.push(YY + ' - 60 = ' + (year - 60).toString() + 
+      ' + 4 = ' + yearBase);
+    } else if (year >= 30) {
+      o.push(YY + ' - 30 = ' + (year - 30).toString() + 
+      ' + 2 = ' + yearBase); 
     }
-    o.push(yIndex + ' / 2 = <b>' + (yIndex / 2).toString() + '</b>');
-    yIndex /= 2;
-    if (isOdd(yIndex)) {
-      o.push(yIndex + ' + 11 = <b>' + (yIndex + 11).toString() + '</b>');
-      yIndex += 11;
-    }
-    let next7 = (7 - (yIndex % 7)) + yIndex;
-    if (next7 - yIndex === 7) {
-      next7 -= 7;
-    }
-    o.push('next 7 is <b>' + next7.toString() + '</b>');
-    o.push(next7.toString() + ' - ' + yIndex + ' = <b><span style="color: red;">' +
-      (next7 - yIndex).toString() + '</span></b>');
-    yIndex = next7 - yIndex;
+    const leapDays = Math.floor(yearBase / 4);
+    o.push(yearBase.toString() + ' + ' + leapDays.toString() +
+    ' leapDays = ' + (yearBase + leapDays).toString());
+    yearBase = yearBase + leapDays;
+    o.push(yearBase  + ' % 7 = ' + (yearBase % 7).toString());
+    yearBase = yearBase % 7;
+    
+    o.push(tally + ' + ' + yearBase.toString() + ' % 7 = ' + ((tally + yearBase) % 7).toString());
+    tally = (tally + yearBase) % 7;
 
     const subtractOneDay = (isLeap && date.month() < 2);
     o.push('leap adjustment: ' + (subtractOneDay ? 'Yes' : 'No'));
-    let lIndex = 0;
     if (subtractOneDay) {
-      lIndex = -1;
-
+      o.push(tally + ' - 1 = ' + (tally - 1).toString()
+      + ((tally - 1) < 0 ? ' + 7 = ' + (tally - 1 + 7).toString() : '')
+      );
+      tally = tally - 1;
+      if (tally < 0) {
+        tally += 7;
+      }
     }
-
-    const cIndex = centuryBase;
-    o.push('century offset (' + century + '00) = <b><span style="color: red;">' + cIndex + '</span></b>');
-
-    let index = mIndex + yIndex + lIndex + cIndex;
-    if (index >= 7) {
-      o.push(mIndex + ' + ' + yIndex + ' + ' + lIndex + ' + ' + cIndex + ' = ' + index);
-      o.push(index + ' % 7 = <b><span style="color: red;">' + (index %  7) + '</span></b>');
-      index %= 7;
-    } else {
-      o.push(mIndex + ' + ' + yIndex + ' + ' + lIndex + ' + ' + cIndex + ' = <b><span style="color: red;">' + index + '</span></b>');
-    }
-    o.push(index + ' = ' + this.days[index]);
+    o.push(tally + ' = ' + this.days[tally]);
 
     return o;
   }
