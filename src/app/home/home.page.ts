@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
+import * as moment from 'moment';
+
 import { Stats } from '../interfaces/stats';
 import { ShowworkService } from '../services/showwork.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
 
 @Component({
   selector: 'app-home',
@@ -26,6 +26,7 @@ export class HomePage implements OnInit {
     tests: [],
     trials: 0,
     wins: 0,
+    passes: 0,
     lower: 1800,
     upper: 2100
   };
@@ -95,7 +96,15 @@ export class HomePage implements OnInit {
       ' to ' + this.endDate.format('MM/DD/YYYY'));
     const span = this.endDate.diff(this.startDate, 'days');
     const rnd = Math.floor(Math.random() * span); // returns a random integer from 0 to 9
+
     this.startDate.add(rnd, 'days');
+
+    // TEST LEAP DAYS ONLY
+    // if (!this.startDate.isLeapYear() || this.startDate.month() > 1) {
+    //  this.test();
+    //  return;
+    // }
+
     this.TestDisplay = this.startDate.format('MM/DD/YYYY');
     this.startTime = +new Date();
     this.updateTimerDisplay();
@@ -154,6 +163,7 @@ export class HomePage implements OnInit {
         tests: [],
         trials: 0,
         wins: 0,
+        passes: 0,
         lower: 1800,
         upper: 2100
       };
@@ -165,5 +175,11 @@ export class HomePage implements OnInit {
       this.stats.upper = 2100;
     }
   }
+  reset() {
+    console.log('reset');
+    this.testing = false;
+    this.updateTimerDisplay();
+    this.stats.passes++;
+}
 
 }

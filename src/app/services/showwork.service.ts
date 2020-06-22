@@ -40,11 +40,17 @@ export class ShowworkService {
     let mIndex;
     const monthTarget = this.monthTargets[date.month()];
 
-    o.push(date.format('MMMM') + ' Base: ' + monthTarget);
+    o.push(date.format('MMMM') + ' Base: <b>' + monthTarget + '</b>');
+    if (date.date() >= 7) {
+      o.push(date.date().toString() + ' % 7 = <b>' + (date.date() % 7).toString() + '</b>');
+    }
     const dateMod = (date.date() % 7);
-    o.push(date.date().toString() + ' % 7 = ' + dateMod.toString());
     let tally = (monthTarget + dateMod) % 7;
-    o.push('(' + monthTarget + ' + ' + dateMod + ' = ' + (monthTarget + dateMod).toString() + ') % 7 = ' + tally.toString());
+    o.push('(' + monthTarget + ' + ' + dateMod + ' = ' +
+    (monthTarget + dateMod < 7 ? '<b>' : '') + 
+     (monthTarget + dateMod).toString() +
+     (monthTarget + dateMod < 7 ? '</b>' : '') + 
+     ')' + ((monthTarget + dateMod >= 7) ? ' % 7 = <b>' + tally.toString() + '</b>' : ''));
 
     const cIndex = centuryBase;
     console.log('centuryBase', centuryBase)
@@ -54,7 +60,8 @@ export class ShowworkService {
       ((centuryBase > 0) ? '+': '') +
       centuryBase.toString() + ' (' +
       century.toString() + '00)' +
-     ' % 7  = ' + ((tally + centuryBase) % 7).toString());
+      ((tally + centuryBase >= 7) ? ' % 7  = ' : ' = ')
+      + '<b>' + ((tally + centuryBase) % 7).toString() + '</b>');
     tally = (tally + cIndex) % 7;
 
 
@@ -62,13 +69,13 @@ export class ShowworkService {
     let yearBase = year % 28;
     if (year >= 90) {
       o.push(YY + ' - 90 = ' + (year - 90).toString() + 
-      ' + 6 = ' + yearBase);
+      ' + 6 = ' + (year - 90 + 6).toString());
     } else if (year >= 60) {
       o.push(YY + ' - 60 = ' + (year - 60).toString() + 
-      ' + 4 = ' + yearBase);
+      ' + 4 = ' + (year - 60 + 4).toString());
     } else if (year >= 30) {
       o.push(YY + ' - 30 = ' + (year - 30).toString() + 
-      ' + 2 = ' + yearBase); 
+      ' + 2 = ' + (year - 30 + 2).toString()); 
     }
     const leapDays = Math.floor(yearBase / 4);
     o.push(yearBase.toString() + ' + ' + leapDays.toString() +
@@ -77,7 +84,15 @@ export class ShowworkService {
     o.push(yearBase  + ' % 7 = ' + (yearBase % 7).toString());
     yearBase = yearBase % 7;
     
-    o.push(tally + ' + ' + yearBase.toString() + ' % 7 = ' + ((tally + yearBase) % 7).toString());
+    if (tally + yearBase >= 7) {
+      o.push('(' + tally + ' + ' + yearBase.toString() + ' = ' + (tally + yearBase).toString() + ')' + ' % 7 = ' +
+      '<b>' + ((tally + yearBase) % 7).toString() + '</b>'
+      ); 
+    } else {
+      o.push(tally + ' + ' + yearBase.toString() + ' = ' +
+      '<b>' + ((tally + yearBase) % 7).toString() + '</b>'
+      ); 
+    }
     tally = (tally + yearBase) % 7;
 
     const subtractOneDay = (isLeap && date.month() < 2);

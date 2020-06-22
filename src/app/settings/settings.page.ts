@@ -20,6 +20,7 @@ export class SettingsPage implements OnInit, AfterViewInit {
     tests: [],
     trials: 0,
     wins: 0,
+    passes: 0,
     lower: 1800,
     upper: 2000
   };
@@ -48,6 +49,7 @@ export class SettingsPage implements OnInit, AfterViewInit {
         tests: [],
         trials: 0,
         wins: 0,
+        passes: 0,
         lower: 1800,
         upper: 2100
       };
@@ -74,8 +76,8 @@ export class SettingsPage implements OnInit, AfterViewInit {
 
   async clearStats() {
     const alert = await this.alertController.create({
-      header: 'Confirm!',
-      message: 'Message <strong>text</strong>!!!',
+      header: 'Clear Stats',
+      message: 'Are you sure?',
       buttons: [
         {
           text: 'Cancel',
@@ -85,7 +87,7 @@ export class SettingsPage implements OnInit, AfterViewInit {
             console.log('Confirm Cancel');
           }
         }, {
-          text: 'Okay',
+          text: 'Yes',
           handler: () => {
             this.stats = {
               streak: 0,
@@ -93,8 +95,9 @@ export class SettingsPage implements OnInit, AfterViewInit {
               tests: [],
               trials: 0,
               wins: 0,
+              passes: 0,
               lower: 1800,
-              upper: 2100
+              upper: this.stats.upper
             };
             this.storage.set('stats', this.stats);
           }

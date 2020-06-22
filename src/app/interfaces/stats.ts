@@ -12,6 +12,7 @@ export interface Stats {
     tests: Array<Test>;
     trials: number;
     wins: number;
+    passes: number;
     lower: number;
     upper: number;
 }
