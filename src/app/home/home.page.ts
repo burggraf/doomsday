@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
     wins: 0,
     passes: 0,
     lower: 1800,
-    upper: 2100
+    upper: 2000
   };
   tries = 0;
   steps = [];
@@ -156,6 +156,7 @@ export class HomePage implements OnInit {
   async ionViewWillEnter() {
     console.log('home ionViewWillEnter');
     this.stats = await this.storage.get('stats');
+    console.log('stats', this.stats);
     if (this.stats === null) {
       this.stats = {
         streak: 0,
@@ -165,14 +166,14 @@ export class HomePage implements OnInit {
         wins: 0,
         passes: 0,
         lower: 1800,
-        upper: 2100
+        upper: 2000
       };
     }
     if (!this.stats.lower) {
       this.stats.lower = 1800;
     }
     if (!this.stats.upper) {
-      this.stats.upper = 2100;
+      this.stats.upper = 2000;
     }
   }
   reset() {

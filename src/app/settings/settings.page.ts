@@ -13,7 +13,7 @@ import { Stats } from '../interfaces/stats';
 
 export class SettingsPage implements OnInit, AfterViewInit {
 
-  sliderValue = {lower: 1800, upper: 2100};
+  sliderValue = {lower: 1800, upper: 2000};
   stats: Stats = {
     streak: 0,
     recordStreak: 0,
@@ -51,14 +51,14 @@ export class SettingsPage implements OnInit, AfterViewInit {
         wins: 0,
         passes: 0,
         lower: 1800,
-        upper: 2100
+        upper: 2000
       };
     }
     if (!this.stats.lower) {
       this.stats.lower = 1800;
     }
     if (!this.stats.upper) {
-      this.stats.upper = 2100;
+      this.stats.upper = 2000;
     }
     this.sliderValue = { lower: this.stats.lower, upper: this.stats.upper };
   }

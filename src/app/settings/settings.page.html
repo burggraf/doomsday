@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list>
     <ion-item lines="none">
-      <ion-label text-center>
+      <ion-label class="ion-text-center">
         Test range: {{sliderValue?.lower}} -
         {{sliderValue?.upper}}
       </ion-label>
@@ -32,13 +32,13 @@
     <ion-item-group *ngIf="showLog">
       <ion-item lines="full" color="primary">
         <ion-label slot="start">Date</ion-label>
-        <ion-label text-center>Tries</ion-label>
-        <ion-label slot="end" text-right>Time</ion-label>
+        <ion-label class="ion-text-center">Tries</ion-label>
+        <ion-label slot="end" class="ion-text-right">Time</ion-label>
       </ion-item>
       <ion-item *ngFor="let test of stats.tests" lines="full">
         <ion-label slot="start">{{ test.date | date }}</ion-label>
-        <ion-label text-center>{{test.tries}}</ion-label>
-        <ion-label slot="end" text-right>{{ test.time | number:'2.1-1' }}</ion-label>
+        <ion-label class="ion-text-center">{{test.tries}}</ion-label>
+        <ion-label slot="end" class="ion-text-right">{{ test.time | number:'2.1-1' }}</ion-label>
       </ion-item>
     </ion-item-group>
   </ion-list>
