@@ -150,7 +150,7 @@ export class HomePage implements OnInit {
       arr[i] = this.sanitizer.bypassSecurityTrustHtml(arr[i]);
     }
     this.steps = arr;
-  this.storage.set('stats', this.stats);
+    this.storage.set('stats', this.stats);
   }
 
   async ionViewWillEnter() {
@@ -181,6 +181,13 @@ export class HomePage implements OnInit {
     this.testing = false;
     this.updateTimerDisplay();
     this.stats.passes++;
+    this.stats.tests.unshift({
+      'ts': moment(), // +new Date(),
+      'date': this.startDate.format('MM/DD/YYYY'),
+      'tries': 0,
+      'time': Math.min(((this.endTime - this.startTime) / 1000), 99.9)
+    });
+    this.storage.set('stats', this.stats);
 }
 
 }
