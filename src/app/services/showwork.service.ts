@@ -66,16 +66,20 @@ export class ShowworkService {
 
 
     o.push('Year: ' + YY);
-    let yearBase = year % 28;
+    let yearBase;
+    // let yearBase = year % 28;
     if (year >= 90) {
       o.push(YY + ' - 90 = ' + (year - 90).toString() + 
       ' + 6 = ' + (year - 90 + 6).toString());
+      yearBase = year - 90;
     } else if (year >= 60) {
       o.push(YY + ' - 60 = ' + (year - 60).toString() + 
       ' + 4 = ' + (year - 60 + 4).toString());
+      yearBase = year - 60;
     } else if (year >= 30) {
       o.push(YY + ' - 30 = ' + (year - 30).toString() + 
       ' + 2 = ' + (year - 30 + 2).toString()); 
+      yearBase = year - 30;
     }
     const leapDays = Math.floor(yearBase / 4);
     o.push(yearBase.toString() + ' + ' + leapDays.toString() +
