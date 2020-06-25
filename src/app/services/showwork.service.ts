@@ -53,8 +53,8 @@ export class ShowworkService {
      ')' + ((monthTarget + dateMod >= 7) ? ' % 7 = <b>' + tally.toString() + '</b>' : ''));
 
     const cIndex = centuryBase;
-    console.log('centuryBase', centuryBase)
-    console.log('cIndex', cIndex);
+    // console.log('centuryBase', centuryBase)
+    // console.log('cIndex', cIndex);
     o.push(
       tally.toString() +
       ((centuryBase > 0) ? '+': '') +
@@ -62,29 +62,34 @@ export class ShowworkService {
       century.toString() + '00)' +
       ((tally + centuryBase >= 7) ? ' % 7  = ' : ' = ')
       + '<b>' + ((tally + centuryBase) % 7).toString() + '</b>');
+    // console.log('a');
     tally = (tally + cIndex) % 7;
-
+    // console.log('b');
 
     o.push('Year: ' + YY);
     let yearBase;
+    let adjustYear = 0;
     // let yearBase = year % 28;
     if (year >= 90) {
       o.push(YY + ' - 90 = ' + (year - 90).toString() + 
       ' + 6 = ' + (year - 90 + 6).toString());
       yearBase = year - 90;
+      adjustYear = 6;
     } else if (year >= 60) {
       o.push(YY + ' - 60 = ' + (year - 60).toString() + 
       ' + 4 = ' + (year - 60 + 4).toString());
       yearBase = year - 60;
+      adjustYear = 4;
     } else if (year >= 30) {
       o.push(YY + ' - 30 = ' + (year - 30).toString() + 
       ' + 2 = ' + (year - 30 + 2).toString()); 
       yearBase = year - 30;
+      adjustYear = 2;
     }
-    const leapDays = Math.floor(yearBase / 4);
-    o.push(yearBase.toString() + ' + ' + leapDays.toString() +
-    ' leapDays = ' + (yearBase + leapDays).toString());
-    yearBase = yearBase + leapDays;
+    const leapDays = Math.floor((yearBase + adjustYear) / 4);
+    o.push((yearBase + adjustYear).toString() + ' + ' + leapDays.toString() +
+    ' leapDays = ' + (yearBase + adjustYear + leapDays).toString());
+    yearBase = yearBase + adjustYear + leapDays;
     o.push(yearBase  + ' % 7 = ' + (yearBase % 7).toString());
     yearBase = yearBase % 7;
     
@@ -111,7 +116,7 @@ export class ShowworkService {
       }
     }
     o.push(tally + ' = ' + this.days[tally]);
-
+    // console.log('show work returning', o);
     return o;
   }
 }

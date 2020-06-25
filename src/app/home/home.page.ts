@@ -54,7 +54,7 @@ export class HomePage implements OnInit {
   constructor(private storage: Storage,
               private showWorkService: ShowworkService,
               private sanitizer: DomSanitizer) {
-    console.log(this.showWorkService.showWork(moment('1879-12-27')));
+    // console.log(this.showWorkService.showWork(moment('1879-12-27')));
     /*
     console.log(this.showWorkService.showWork(moment('1850-02-03')));
     console.log(this.showWorkService.showWork(moment('1967-04-16')));
@@ -92,8 +92,8 @@ export class HomePage implements OnInit {
     this.tries = 0;
     this.startDate = moment(this.stats.lower + '-01-01');
     this.endDate = moment((this.stats.upper + 99) + '-12-31');
-    console.log('test from ' + this.startDate.format('MM/DD/YYYY') +
-      ' to ' + this.endDate.format('MM/DD/YYYY'));
+    // console.log('test from ' + this.startDate.format('MM/DD/YYYY') +
+    //   ' to ' + this.endDate.format('MM/DD/YYYY'));
     const span = this.endDate.diff(this.startDate, 'days');
     const rnd = Math.floor(Math.random() * span); // returns a random integer from 0 to 9
 
@@ -154,9 +154,9 @@ export class HomePage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    console.log('home ionViewWillEnter');
+    // console.log('home ionViewWillEnter');
     this.stats = await this.storage.get('stats');
-    console.log('stats', this.stats);
+    // console.log('stats', this.stats);
     if (this.stats === null) {
       this.stats = {
         streak: 0,
@@ -177,7 +177,7 @@ export class HomePage implements OnInit {
     }
   }
   reset() {
-    console.log('reset');
+    // console.log('reset');
     this.testing = false;
     this.updateTimerDisplay();
     this.stats.passes++;
