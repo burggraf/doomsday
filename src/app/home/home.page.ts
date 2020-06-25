@@ -104,6 +104,8 @@ export class HomePage implements OnInit {
     //  this.test();
     //  return;
     // }
+    // SPECIAL TEST HERE
+    // this.startDate = moment('1816-04-10');
 
     this.TestDisplay = this.startDate.format('MM/DD/YYYY');
     this.startTime = +new Date();

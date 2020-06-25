@@ -67,7 +67,7 @@ export class ShowworkService {
     // console.log('b');
 
     o.push('Year: ' + YY);
-    let yearBase;
+    let yearBase = year;
     let adjustYear = 0;
     // let yearBase = year % 28;
     if (year >= 90) {
