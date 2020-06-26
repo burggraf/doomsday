@@ -1,0 +1,8 @@
+app_identifier("com.dmarie.day") # The bundle identifier of your app
+apple_id("markb@dmarie.com") # Your Apple email address
+
+itc_team_id("69351945") # App Store Connect Team ID
+team_id("D2YS7T2P6Y") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

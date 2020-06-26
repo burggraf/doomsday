@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">day</string>
+    <string name="title_activity_main">day</string>
+    <string name="package_name">com.dmarie.day</string>
+    <string name="custom_url_scheme">com.dmarie.day</string>
+</resources>
