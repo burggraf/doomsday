@@ -5,9 +5,8 @@
 *.sw[mnpcod]
 *.log
 *.tmp
-ios/App/*.ipa
-ios/App/Day.ipa
-ios/App/App.ipa
+ios/*
+android/*
 *.tmp.*
 log.txt
 *.sublime-project
