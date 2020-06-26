@@ -5,8 +5,8 @@
 *.sw[mnpcod]
 *.log
 *.tmp
-ios/*
-android/*
+ios/
+android/
 *.tmp.*
 log.txt
 *.sublime-project
