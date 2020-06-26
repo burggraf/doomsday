@@ -7,9 +7,10 @@ App/Pods
 App/public
 App/Podfile.lock
 xcuserdata
-App/*dSYM.zip
+App/*.dSYM.zip
 App/App/Assets.xcassets/AppIcon.appiconset
 App/App/Assets.xcassets/Splash.imageset
+App/*.ipa
 
 # Cordova plugins for Capacitor
 capacitor-cordova-ios-plugins
