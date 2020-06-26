@@ -5,7 +5,7 @@
 *.sw[mnpcod]
 *.log
 *.tmp
-*.ipa
+ios/App/*.ipa
 *.tmp.*
 log.txt
 *.sublime-project
