@@ -1,6 +1,8 @@
 {
-  "name": "Doomsday Tester",
-  "short_name": "Doomsday Tester",
+  "name": "Day of the Week Tester",
+  "version": "1.1.0",
+  "builddate": "2020-06-27@09:02:18",
+  "short_name": "Day Tester",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

@@ -6,11 +6,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "builddate=$(date \"+%Y-%m-%d@%H:%M:%S\");echo builddate is $builddate;echo Updating to version $npm_package_version in ./src/manifest.json && json -I -f ./src/manifest.json -e 'this.version=\"'$npm_package_version'\"' && json -I -f ./src/manifest.json -e 'this.builddate=\"'$builddate'\"' && ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js"
+    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js",
+    "builddate": "builddate=$(date \"+%Y-%m-%d@%H:%M:%S\"); echo builddate is: ${builddate} ; json -I -f ./src/assets/appinfo.json -e 'this.builddate=\"'$builddate'\"'; json -I -f ./src/ngsw-config.json -e 'this.version++';",
+    "version": "builddate=$(date \"+%Y-%m-%d@%H:%M:%S\");echo builddate is $builddate;echo Updating to version $npm_package_version in ./src/manifest.json && json -I -f ./src/manifest.json -e 'this.version=\"'$npm_package_version'\"' && json -I -f ./src/manifest.json -e 'this.builddate=\"'$builddate'\"'",
+    "configVersion": "json -I -f ./src/ngsw-config.json -e 'this.version++'"
   },
   "private": true,
   "dependencies": {
@@ -57,6 +60,7 @@
     "ionic": "^4.12.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
+    "json": "^9.0.6",
     "karma": "~5.0.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~3.0.2",

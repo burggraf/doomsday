@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 import { Stats } from '../interfaces/stats';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +13,7 @@ import { Stats } from '../interfaces/stats';
 })
 
 export class SettingsPage implements OnInit, AfterViewInit {
-
+  appInfo: any;
   sliderValue = {lower: 1800, upper: 2000};
   stats: Stats = {
     streak: 0,
@@ -26,13 +27,15 @@ export class SettingsPage implements OnInit, AfterViewInit {
   };
   // moment = moment;
   showLog = false;
-  constructor(private storage: Storage,
+  constructor(private storage: Storage, private http: HttpClient,
     private alertController: AlertController) {
 
   }
 
   async ngOnInit() {
-    console.log('** ngOnInit');
+    // console.log('** ngOnInit');
+    this.appInfo = await this.getAppInfo();
+    // console.log('appInfo', this.appInfo);
   }
 
   async ngAfterViewInit() {
@@ -106,6 +109,28 @@ export class SettingsPage implements OnInit, AfterViewInit {
     });
 
     await alert.present();
+  }
+  async info() {
+    const alert = await this.alertController.create({
+      header: 'Info',
+      message: `${this.appInfo.name}<br><br>version ${this.appInfo.version}<br><br>${this.appInfo.builddate}`,
+      buttons: [
+        {
+          text: 'OK',
+          cssClass: 'primary',
+        }
+      ]
+    });
+
+    await alert.present();
+
+  }
+  public async getAppInfo() {
+    // options = { responseType: 'text' }
+
+    const url = 'manifest.json';
+
+    return await this.http.get(url).toPromise();
   }
 
 }
