@@ -126,7 +126,7 @@ export class HomePage implements OnInit {
 
   saveScore() {
     this.stats.tests.unshift({
-      'ts': moment(), // +new Date(),
+      'ts': +new Date(), // moment()
       'date': this.startDate.format('MM/DD/YYYY'),
       'tries': this.tries,
       'time': Math.min(((this.endTime - this.startTime) / 1000), 99.9)
@@ -152,13 +152,15 @@ export class HomePage implements OnInit {
       arr[i] = this.sanitizer.bypassSecurityTrustHtml(arr[i]);
     }
     this.steps = arr;
+    // console.log('this.storage.set stats', this.stats);
     this.storage.set('stats', this.stats);
   }
 
   async ionViewWillEnter() {
     // console.log('home ionViewWillEnter');
+    // console.log('this.storage.get stats');
     this.stats = await this.storage.get('stats');
-    // console.log('stats', this.stats);
+    // console.log('result', this.stats);
     if (this.stats === null) {
       this.stats = {
         streak: 0,
@@ -184,11 +186,12 @@ export class HomePage implements OnInit {
     this.updateTimerDisplay();
     this.stats.passes++;
     this.stats.tests.unshift({
-      'ts': moment(), // +new Date(),
+      'ts': +new Date(),
       'date': this.startDate.format('MM/DD/YYYY'),
       'tries': 0,
       'time': Math.min(((this.endTime - this.startTime) / 1000), 99.9)
     });
+    // log('this.storage.set stats', this.stats);
     this.storage.set('stats', this.stats);
 }
 

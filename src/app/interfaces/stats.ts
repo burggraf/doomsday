@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 
 interface Test {
-    ts: Moment;
+    ts: number;
     date: string;
     tries: number;
     time: number;
