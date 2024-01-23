@@ -1,7 +1,0 @@
-{
-  "appId": "com.dmarie.day",
-  "appName": "day",
-  "bundledWebRuntime": false,
-  "webDir": "www",
-  "npmClient": "npm"
-}
